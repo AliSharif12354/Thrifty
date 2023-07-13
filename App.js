@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import BootUpScreen from './screens/BootUp';
+import SearchBarScreen from './screens/SearchBar';
 
-export default function App() {
+const App = () => {
+  const [showBootUpScreen, setShowBootUpScreen] = React.useState(true);
+
+  const handleSearch = (searchText) => {
+    // Handle search logic here
+    console.log('Search text:', searchText);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      {showBootUpScreen ? (
+        <BootUpScreen onBootUpComplete={() => setShowBootUpScreen(false)} />
+      ) : (
+        <SearchBarScreen onSearch={handleSearch} />
+      )}
+    </>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
