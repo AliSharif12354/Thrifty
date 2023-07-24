@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const BootUp = ({ onBootUpComplete }) => {
-  React.useEffect(() => {
+const BootUp = ({ navigation }) => {
+  useEffect(() => {
     setTimeout(() => {
-      onBootUpComplete();
-    }, 2000);
+      navigation.replace('BusinessSignUp'); // Move to SignInChoice after delay
+    }, 2000); // Adjust the delay time as needed
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>THRIFTY</Text>
+      <Text style={styles.title}>MerchIt</Text>
     </View>
   );
 };
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#202020',
+    backgroundColor: '#000',
   },
   title: {
     fontSize: 32,
