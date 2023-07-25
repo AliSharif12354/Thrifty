@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 const BootUp = ({ navigation }) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('BusinessSignUp'); // Move to SignInChoice after delay
+      navigation.replace('SignInChoice'); // Move to SignInChoice after delay
     }, 2000); // Adjust the delay time as needed
   }, []);
 
