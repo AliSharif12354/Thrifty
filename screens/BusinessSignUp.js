@@ -6,6 +6,10 @@ import AWS from 'aws-sdk';
 // Configure AWS with your region and user pool ID
 AWS.config.update({
     region: 'us-east-2', // Replace 'YOUR_REGION' with 'us-east-2'
+    credentials: {
+        accessKeyId: 'AKIA5YB42DBX7CESQWYR',
+        secretAccessKey: 'nvmr3fb7MqpZ18exzXILXh7sPIPC4luYNZhyr2pT',
+    },
 });
 
 const userPoolId = 'us-east-2_NvByQgbMP'; // Replace 'YOUR_USER_POOL_ID' with the actual user pool ID
@@ -26,8 +30,14 @@ const BusinessSignUp = () => {
         }
 
         // Validate password complexity
-        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
-            setMessage('Password must be 8 characters long, contain uppercase letters, lowercase letters, a number, and a symbol.');
+        if (
+            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+                password
+            )
+        ) {
+            setMessage(
+                'Password must be 8 characters long, contain uppercase letters, lowercase letters, a number, and a symbol.'
+            );
             return;
         }
 
@@ -46,19 +56,42 @@ const BusinessSignUp = () => {
 
         cognitoIdentityServiceProvider.signUp(params, (err, data) => {
             if (err) {
-                if (err.code === 'InvalidParameterException' && err.message === 'Username should be an email.') {
+                console.log(err);
+                if (
+                    err.code === 'InvalidParameterException' &&
+                    err.message === 'Username should be an email.'
+                ) {
                     setMessage('Invalid email format');
                 } else if (err.code === 'UsernameExistsException') {
                     setMessage('An account with the given email already exists.');
                 } else if (err.code === 'InvalidPasswordException') {
-                    setMessage('Password must be 8 characters long, contain uppercase letters, lowercase letters, a number, and a symbol.');
+                    setMessage(
+                        'Password must be 8 characters long, contain uppercase letters, lowercase letters, a number, and a symbol.'
+                    );
                 } else {
                     setMessage('An error occurred during sign-up. Please try again later.');
                 }
             } else {
+                // Confirm the sign-up programmatically
+                confirmSignUp(email);
                 // Verification email will be sent by Cognito, no need to do anything here
                 setMessage('Sign-up successful! Please check your email for verification.');
-                // Optionally, you can redirect the user to the sign-in screen or handle successful sign-up here
+            }
+        });
+    };
+
+    const confirmSignUp = (emailAddress) => {
+        const adminParams = {
+            UserPoolId: userPoolId,
+            Username: email,
+        };
+
+        cognitoIdentityServiceProvider.adminConfirmSignUp(adminParams, (err, data) => {
+            if (err) {
+                console.log('Error confirming sign-up:', err.message);
+            } else {
+                console.log('Successfully confirmed sign-up:', data);
+                // Optionally, you can navigate the user to the main application or any other screen
             }
         });
     };
