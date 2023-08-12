@@ -6,6 +6,7 @@ import BootUp from './screens/BootUp';
 import BusinessSignUp from './screens/BusinessSignUp';
 import BusinessSignIn from './screens/BusinessSignIn';
 import SignInChoice from './screens/SignInChoice';
+import Dashboard from './screens/Dashboard';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ const App = () => {
         <Stack.Screen name="SignInChoice" component={SignInChoice} />
         <Stack.Screen name="BusinessSignUp" component={BusinessSignUp} />
         <Stack.Screen name="BusinessSignIn" component={BusinessSignIn} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
         {/* Add more screens here as your app evolves */}
       </Stack.Navigator>
     </NavigationContainer>

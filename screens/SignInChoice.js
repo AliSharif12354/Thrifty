@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const SignInChoice = ({ navigation }) => {
   const handleBusinessSignIn = () => {                                      
-    navigation.navigate('BusinessSignIn');  
+    navigation.replace('BusinessSignIn');  
   };
 
   const handleBusinessSignUp = () => {

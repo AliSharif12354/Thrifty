@@ -12,7 +12,7 @@ const userPoolId = 'us-east-2_NvByQgbMP'; // Replace 'YOUR_USER_POOL_ID' with th
 const appClientId = '7rgs1le23q30a11d5bv4a1qdsc'; // Replace 'YOUR_APP_CLIENT_ID' with the actual app client ID
 const cognitoIdentityServiceProvider = new AWS.CognitoIdentityServiceProvider();
 
-const BusinessSignIn = () => {
+const BusinessSignIn = ( {navigation} ) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -36,6 +36,7 @@ const BusinessSignIn = () => {
       } else {
         console.log('Sign in successful:', data);
         setMessage('Sign in successful!');
+        navigation.navigate('Dashboard', { idToken: data.AuthenticationResult?.IdToken });
         // Optionally, you can redirect the user to the home screen or handle successful sign-in here
       }
     });
